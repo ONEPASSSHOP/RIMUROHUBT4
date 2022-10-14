@@ -1,0 +1,141 @@
+function checklevel()
+    local mylevel = game:GetService("Players").LocalPlayer.Data.Level.Value
+    if mylevel == 1 or mylevel <= 9 then
+    Mon = "Bandit [Lv. 5]"
+    QN = "BanditQuest1"
+    QC = 1
+end
+end
+ 
+_G.Color = Color3.fromRGB(250, 10, 10)
+_G.Color2 = Color3.fromRGB(250, 250, 250)
+ 
+    weapon = {}
+    for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if v:IsA("Tool") then
+                table.insert(weapon ,v.Name)
+            end
+        end
+ 
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/naypramx/Ui__Project/Script/XeNonUi", true))()
+    library:CreateWatermark("RIMURO HUB")
+    local CenterHubNo1 = library:CreateWindow("RIMUROHUB | BLOXFRUIT",Enum.KeyCode.RightControl)
+    local Tab = CenterHubNo1:CreateTab("Main")
+    local AutoFarm1 = Tab:CreateSector("Auto Farm","left")
+    local autoequip = Tab:CreateSector("Auto Equip","Right")
+    AutoFarm1:AddLabel("AutoFarm Lv.")
+ 
+    AutoFarm1:AddToggle("AutoFarm",false,function(t)
+       _G.auto_farm = t
+end)
+ 
+    local A = autoequip:AddDropdown("Please Select Your Weapon", weapon,"None",false,function(t)
+        _G.Weapon = t
+    end)
+ 
+    autoequip:AddButton("Refresh Weapon",function()
+        A:Clear(weapon)
+    for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+            if v:IsA("Tool") then
+                table.insert(weapon ,v.Name)
+        A:Add(weapon)
+            end
+    end
+    end)
+ 
+    spawn(function()
+       game:GetService("RunService").RenderStepped:Connect(function()
+        pcall(function()
+            if _G.auto_farm then
+            if game:GetService("Workspace").Enemies[Mon].Humanoid.Health == 0 then
+game:GetService("Workspace").Enemies[Mon]:Destroy()
+end
+end
+end)
+end)
+end)
+ 
+    spawn(function()
+       game:GetService("RunService").RenderStepped:Connect(function()
+        pcall(function()
+            if _G.auto_farm then
+    if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+ 
+local args = {
+    [1] = "StartQuest",
+    [2] = QN,
+    [3] = QC
+}
+ 
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+ 
+elseif game:GetService("Workspace").Enemies[Mon] then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Enemies[Mon].HumanoidRootPart.CFrame * CFrame.new(0,45,0)
+    local CombatFramework = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+    local Camera = require(game.ReplicatedStorage.Util.CameraShaker)
+    Camera:Stop()
+    getupvalues(CombatFramework)[2].activeController.hitboxMagnitude = 80
+    getupvalues(CombatFramework)[2]['activeController']:attack()   
+end
+end
+end)
+end)
+end)
+ 
+    spawn(function()
+       game:GetService("RunService").RenderStepped:Connect(function()
+        pcall(function()
+            if _G.auto_farm then
+game.Players.LocalPlayer.Character.Humanoid:EquipTool(game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(_G.Weapon))
+end
+end)
+end)
+end)
+ 
+    spawn(function()
+       game:GetService("RunService").RenderStepped:Connect(function()
+        pcall(function()
+            if _G.auto_farm then
+if not game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1043.29504, 69.1876144, 1573.40332, 0.961627185, 3.05215089e-08, -0.274359524, -3.99598719e-08, 1, -2.88125221e-08, 0.274359524, 3.86702759e-08, 0.961627185)
+end
+end
+end)
+end)
+end)
+ 
+    spawn(function()
+       game:GetService("RunService").RenderStepped:Connect(function()
+        pcall(function()
+            if _G.auto_farm then
+    for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        for i2,v2 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == Mon and v2.Name == Mon then
+                                v2.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+                                v2.HumanoidRootPart.CanCollide = false
+                                v.Humanoid:ChangeState(11)
+                            v.Humanoid.JumpPower = 0
+                            v.Humanoid.WalkSpeed = 0
+                            if v.Humanoid:FindFirstChild("Animator") then
+                                v.Humanoid.Animator:Destroy()
+                            end
+                                sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                            end
+                        end
+    end
+ 
+                        end
+        end)
+       end)
+    end)
+ 
+    spawn(function()
+        game:GetService("RunService").Heartbeat:Connect(function()
+            if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") and _G.auto_farm then
+                setfflag("HumanoidParallelRemoveNoPhysics", "False")
+                setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+                game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(11)
+            end
+        end)
+    end)
+ 
